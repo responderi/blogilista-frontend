@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import loginService from './services/login'
 import blogService from './services/blogs'
 import Blog from './components/Blog'
+import Notification from './components/Notification'
 
 const App = () => {
   const [username, setUsername] = useState('')
@@ -112,9 +113,13 @@ const App = () => {
       .create(blogObject)
       .then(blog => {
         setBlogs(blogs.concat(blog))
+        setErrorMessage(`a new blog ${title} by ${author}`)
         setTitle('')
         setAuthor('')
         setUrl('')
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
       })
   }
 
@@ -122,6 +127,7 @@ const App = () => {
     return (
       <div>
         <h2>Log in to application</h2>
+        <Notification message={errorMessage}/>
         {loginForm()}
       </div>
     )
@@ -135,6 +141,7 @@ const App = () => {
       </div>
       <div>
         <h2>create new</h2>
+        <Notification message={errorMessage}/>
         {blogForm()}
         {blogs.map(blog =>
           <Blog key={blog.id} blog={blog} />
