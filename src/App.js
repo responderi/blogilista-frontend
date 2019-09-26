@@ -49,7 +49,6 @@ const App = () => {
 
   const loginForm = () => (
     <div>
-      <h1>log in to application</h1>
       <form onSubmit={handleLogin}>
        <div>
          username
